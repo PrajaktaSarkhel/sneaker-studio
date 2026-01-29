@@ -1,38 +1,37 @@
-"use client";
+"use client"
 
-import { Slider } from "@/components/ui/slider";
-import { useCustomizerStore } from "@/lib/stores/customizer-store";
+import { useState } from "react"
+import { Slider } from "@/components/ui/slider"
 
-const PARTS = ["upper", "sole", "laces"] as const;
+interface CustomizerControlsProps {
+  onColorChange: (color: string) => void
+}
 
-export default function CustomizerControls() {
-  const { setColor, setZoom } = useCustomizerStore();
+export default function CustomizerControls({ onColorChange }: CustomizerControlsProps) {
+  const [value, setValue] = useState(50)
 
   return (
     <div className="space-y-6">
-      {PARTS.map((part) => (
-        <div key={part}>
-          <p className="capitalize text-sm font-medium mb-2">
-            {part} color
-          </p>
-          <Slider
-            max={360}
-            step={1}
-            onValueChange={(v) => setColor(part, v[0])}
-          />
-        </div>
-      ))}
-
       <div>
-        <p className="text-sm font-medium mb-2">Zoom</p>
+        <p className="text-sm mb-2">Accent Intensity</p>
         <Slider
-          min={0.9}
-          max={1.4}
-          step={0.05}
-          defaultValue={[1]}
-          onValueChange={(v) => setZoom(v[0])}
+          defaultValue={[50]}
+          max={100}
+          step={1}
+          onValueChange={(v) => setValue(v[0])}
         />
       </div>
+
+      <div className="flex gap-3">
+        {["#111111", "#ff3b30", "#2563eb", "#16a34a"].map((c) => (
+          <button
+            key={c}
+            onClick={() => onColorChange(c)}
+            className="w-8 h-8 rounded-full border"
+            style={{ backgroundColor: c }}
+          />
+        ))}
+      </div>
     </div>
-  );
+  )
 }
