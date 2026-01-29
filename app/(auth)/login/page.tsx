@@ -2,8 +2,8 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import Navbar from "@/components/Navbar"
-import Footer from "@/components/Footer"
+//import Navbar from "@/components/Navbar"
+//import Footer from "@/components/Footer"
 import { Button } from "@/components/ui/button"
 
 export default function LoginPage() {
@@ -24,7 +24,7 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-800 to-pink-700 text-white flex flex-col">
-      <Navbar />
+      
       <main className="flex-grow flex items-center justify-center px-4 py-16">
         <div className="w-full max-w-md bg-white dark:bg-neutral-900 rounded-xl shadow-2xl p-8 text-black dark:text-white">
           <h1 className="text-3xl font-bold mb-4 text-center">Welcome Back</h1>
@@ -69,7 +69,7 @@ export default function LoginPage() {
           </p>
         </div>
       </main>
-      <Footer />
+      
     </div>
   )
 }
