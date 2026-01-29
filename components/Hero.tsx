@@ -9,8 +9,10 @@ export default function Hero() {
     <>
       <Navbar />
       
-      <main className="min-h-screen bg-gradient-to-br from-neutral-950 via-neutral-900 to-black dark:from-neutral-950 dark:via-neutral-900 dark:to-black text-white pt-24 px-8">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center min-h-[calc(100vh-6rem)]">
+      <main className="min-h-screen bg-gradient-to-br from-neutral-950 via-neutral-900 to-black text-white pt-24">
+
+        <div className="max-w-7xl mx-auto px-8 grid md:grid-cols-2 gap-10 items-center min-h-[calc(100vh-6rem)]">
+
           {/* Text */}
           <div className="flex flex-col justify-center">
             <h2 className="text-5xl md:text-6xl font-extrabold leading-tight">
