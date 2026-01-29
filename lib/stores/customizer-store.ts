@@ -1,33 +1,41 @@
-import { create } from "zustand";
+import { create } from 'zustand'
 
-export type SneakerPart = "upper" | "sole" | "laces";
-
-interface CustomizerState {
-  colors: Record<SneakerPart, number>;
-  zoom: number;
-  setColor: (part: SneakerPart, value: number) => void;
-  setZoom: (value: number) => void;
-  reset: () => void;
+export interface Customization {
+  color?: string
+  material?: string
+  text?: string
 }
 
-export const useCustomizerStore = create<CustomizerState>((set) => ({
-  colors: {
-    upper: 0,
-    sole: 0,
-    laces: 0,
+export interface Customizations {
+  [part: string]: Customization
+}
+
+export interface CustomizerState {
+  selectedProduct: any | null
+  customizations: Customizations
+  setSelectedProduct: (product: any) => void
+  updateCustomization: (part: string, updates: Partial<Customization>) => void
+  setText: (text: string) => void
+  resetCustomizations: () => void
+}
+
+export const useCustomizerStore = create<CustomizerState>((set, get) => ({
+  selectedProduct: null,
+  customizations: {},
+
+  setSelectedProduct: (product) => set({ selectedProduct: product }),
+
+  updateCustomization: (part, updates) => {
+    const current = { ...get().customizations }
+    current[part] = { ...current[part], ...updates }
+    set({ customizations: current })
   },
-  zoom: 1,
 
-  setColor: (part, value) =>
-    set((state) => ({
-      colors: { ...state.colors, [part]: value },
-    })),
+  setText: (text) => {
+    const current = { ...get().customizations }
+    current['text'] = { text }
+    set({ customizations: current })
+  },
 
-  setZoom: (value) => set({ zoom: value }),
-
-  reset: () =>
-    set({
-      colors: { upper: 0, sole: 0, laces: 0 },
-      zoom: 1,
-    }),
-}));
+  resetCustomizations: () => set({ customizations: {} }),
+}))
