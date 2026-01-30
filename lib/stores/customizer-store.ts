@@ -1,41 +1,52 @@
-import { create } from 'zustand'
+import { create } from "zustand"
 
-export interface Customization {
-  color?: string
-  material?: string
-  text?: string
-}
-
-export interface Customizations {
-  [part: string]: Customization
-}
+export type SneakerModel = "air-max" | "jordan"
+export type Material = "leather" | "canvas"
 
 export interface CustomizerState {
-  selectedProduct: any | null
-  customizations: Customizations
-  setSelectedProduct: (product: any) => void
-  updateCustomization: (part: string, updates: Partial<Customization>) => void
-  setText: (text: string) => void
-  resetCustomizations: () => void
+  model: SneakerModel
+  colors: {
+    base: string
+    sole: string
+    lace: string
+  }
+  material: Material
+  text: string
+  textColor: string
+
+  setModel: (m: SneakerModel) => void
+  setColor: (
+    part: keyof CustomizerState["colors"],
+    value: string
+  ) => void
+  setMaterial: (m: Material) => void
+  setText: (t: string) => void
+  setTextColor: (c: string) => void
 }
 
-export const useCustomizerStore = create<CustomizerState>((set, get) => ({
-  selectedProduct: null,
-  customizations: {},
+export const useCustomizerStore = create<CustomizerState>((set) => ({
+  model: "air-max",
 
-  setSelectedProduct: (product) => set({ selectedProduct: product }),
-
-  updateCustomization: (part, updates) => {
-    const current = { ...get().customizations }
-    current[part] = { ...current[part], ...updates }
-    set({ customizations: current })
+  colors: {
+    base: "#ffffff",
+    sole: "#e5e7eb",
+    lace: "#111827",
   },
 
-  setText: (text) => {
-    const current = { ...get().customizations }
-    current['text'] = { text }
-    set({ customizations: current })
-  },
+  material: "leather",
+  text: "",
+  textColor: "#000000",
 
-  resetCustomizations: () => set({ customizations: {} }),
+  setModel: (model) => set({ model }),
+
+  setColor: (part, value) =>
+    set((state) => ({
+      colors: { ...state.colors, [part]: value },
+    })),
+
+  setMaterial: (material) => set({ material }),
+
+  setText: (text) => set({ text }),
+
+  setTextColor: (textColor) => set({ textColor }),
 }))

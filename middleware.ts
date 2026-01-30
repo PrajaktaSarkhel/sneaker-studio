@@ -1,10 +1,11 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+import { NextResponse } from "next/server"
+import type { NextRequest } from "next/server"
 
-export default function middleware(request: NextRequest) {
-  return NextResponse.next();
+export function middleware(req: NextRequest) {
+  // Allow all routes for frontend assignment
+  return NextResponse.next()
 }
 
 export const config = {
-  matcher: ['/customizer/:path*', '/gallery/:path*', '/login', '/signup'],
-};
+  matcher: ["/customizer", "/gallery"],
+}

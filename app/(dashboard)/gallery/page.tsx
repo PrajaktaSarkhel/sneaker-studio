@@ -1,6 +1,8 @@
+"use client"
+
 import Navbar from "@/components/Navbar"
 import Footer from "@/components/Footer"
-import SneakerCard from "@/components/SneakerCard"
+import DesignGallery from "@/components/DesignGallery"
 
 export default function GalleryPage() {
   return (
@@ -9,26 +11,10 @@ export default function GalleryPage() {
 
       <main className="flex-grow max-w-7xl mx-auto px-8 py-24">
         <h1 className="text-3xl font-bold mb-8">
-          Design Gallery
+          Your Custom Designs
         </h1>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          <SneakerCard
-            image="/images/sneaker-01.png"
-            name="Air Flex"
-            price="₹8,999"
-          />
-          <SneakerCard
-            image="/images/sneaker-02.png"
-            name="NeoKnit"
-            price="₹9,499"
-          />
-          <SneakerCard
-            image="/images/sneaker-03.png"
-            name="StreetRun"
-            price="₹7,999"
-          />
-        </div>
+        <DesignGallery />
       </main>
 
       <Footer />
