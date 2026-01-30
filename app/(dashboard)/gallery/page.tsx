@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import Navbar from "@/components/Navbar"
 import Footer from "@/components/Footer"
 import DesignGallery from "@/components/DesignGallery"
@@ -8,68 +8,48 @@ import DesignGallery from "@/components/DesignGallery"
 const STORAGE_KEY = "sneaker-designs"
 
 export default function GalleryPage() {
-  const [mounted, setMounted] = useState(false)
-
   useEffect(() => {
-    setMounted(true)
+    if (typeof window === "undefined") return
 
     const existing = localStorage.getItem(STORAGE_KEY)
     if (existing) return
 
     const baseDesigns = [
       {
-        id: "base-airmax",
-        product: "Air Max 90",
+        id: "air-max-90",
+        name: "Air Max 90",
+        priceFrom: 8999,
         preview: "/sneakers/air-max/base.png",
         isBase: true,
-        customizations: {
-          upper: { color: "#ff0000", material: "leather" },
-          sole: { color: "#ffffff", material: "rubber" },
-          laces: { color: "#000000", material: "cotton" },
-          text: ""
-        },
-        createdAt: Date.now()
+        liked: false,
       },
       {
-        id: "base-jordan",
-        product: "Jordan 1",
+        id: "jordan-1",
+        name: "Jordan 1 High",
+        priceFrom: 10999,
         preview: "/sneakers/jordan/base.png",
         isBase: true,
-        customizations: {
-          upper: { color: "#111111", material: "leather" },
-          sole: { color: "#ffffff", material: "rubber" },
-          laces: { color: "#ffffff", material: "cotton" },
-          text: ""
-        },
-        createdAt: Date.now()
+        liked: false,
       },
       {
-        id: "base-yeezy",
-        product: "Yeezy Boost 350",
+        id: "yeezy-350",
+        name: "Yeezy Boost 350",
+        priceFrom: 12999,
         preview: "/sneakers/yeezy/base.png",
         isBase: true,
-        customizations: {
-          upper: { color: "#888888", material: "mesh" },
-          sole: { color: "#eeeeee", material: "foam" },
-          laces: { color: "#888888", material: "cotton" },
-          text: ""
-        },
-        createdAt: Date.now()
-      }
+        liked: false,
+      },
     ]
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(baseDesigns))
   }, [])
-
-  // 🚫 Prevent hydration mismatch
-  if (!mounted) return null
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Navbar />
 
       <main className="flex-grow max-w-7xl mx-auto px-8 py-24">
-        <h1 className="text-3xl font-bold mb-8">
+        <h1 className="text-3xl font-bold mb-8 text-center">
           Your Custom Designs
         </h1>
 
