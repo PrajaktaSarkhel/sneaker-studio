@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
+import SneakerPreview from "@/components/SneakerPreview"
 import { Home, Save, RotateCcw, LogOut } from "lucide-react"
 import Link from "next/link"
 
@@ -14,14 +15,15 @@ interface Customization {
   text: string
 }
 
+
 export default function CustomizerPage() {
   const router = useRouter()
 
   // ⚡ All hooks at the top – never conditional
   const [authChecked, setAuthChecked] = useState(false)
-  const [selectedProduct, setSelectedProduct] = useState("Air Max 90")
   const [activePart, setActivePart] = useState<"base" | "sole" | "lace">("base")
   const [activeTab, setActiveTab] = useState<"colors" | "materials" | "text">("colors")
+  const [selectedModel, setSelectedModel] = useState<"airmax" | "jordan" | "yeezy">("airmax")
   const [customizations, setCustomizations] = useState<Customization>({
     base: { color: "#FF0000", material: "leather" },
     sole: { color: "#FFFFFF", material: "rubber" },
@@ -64,7 +66,6 @@ export default function CustomizerPage() {
   const saveDesign = () => {
     const newDesign = {
       id: Date.now().toString(),
-      product: selectedProduct,
       customizations: { ...customizations },
       date: new Date().toLocaleDateString()
     }
@@ -119,18 +120,25 @@ export default function CustomizerPage() {
           <Card className="p-6 bg-neutral-900 border-neutral-800 h-fit">
             <h2 className="text-lg font-bold mb-4">👟 Select Model</h2>
             <div className="space-y-3">
-              {products.map(product => (
+              {[
+                { id: "airmax", label: "Nike Air Max" },
+                { id: "jordan", label: "Jordan 1" },
+                { id: "yeezy", label: "Yeezy Boost" },
+              ].map((m) => (
                 <button
-                  key={product}
-                  onClick={() => setSelectedProduct(product)}
-                  className={`w-full p-4 rounded-lg text-left font-semibold transition-all ${
-                    selectedProduct === product ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white" : "bg-neutral-800 hover:bg-neutral-700 text-neutral-300"
+                  key={m.id}
+                  onClick={() => setSelectedModel(m.id as "airmax" | "jordan" | "yeezy")}
+                  className={`w-full p-4 rounded-lg font-semibold transition-all ${
+                    selectedModel === m.id
+                      ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white"
+                      : "bg-neutral-800 hover:bg-neutral-700 text-neutral-300"
                   }`}
                 >
-                  {product}
+                  {m.label}
                 </button>
               ))}
             </div>
+
 
             <div className="mt-8">
               <h3 className="text-lg font-bold mb-4">Customize Part</h3>
@@ -152,45 +160,40 @@ export default function CustomizerPage() {
 
           {/* CENTER: Live Preview */}
           <Card className="p-8 bg-neutral-900 border-neutral-800">
-            <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">👁️ Live Preview</h2>
-            <div className="relative bg-gradient-to-br from-neutral-800 to-neutral-900 rounded-2xl p-12 min-h-[400px] flex items-center justify-center overflow-hidden">
-              {/* Glow effect */}
-              <div className="absolute w-96 h-96 blur-3xl opacity-30 rounded-full" style={{ background: `radial-gradient(circle, ${customizations.base.color}80, transparent)` }} />
+            <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+              👁️ Live Preview
+            </h2>
 
-              {/* Sneaker parts */}
-              <div className="relative w-[350px] h-[250px]" style={{ transform: "rotate(-15deg)" }}>
-                {/* Base */}
-                <div className="absolute top-0 left-0 w-full h-[60%] rounded-tl-[80px] rounded-tr-[60px] transition-all duration-300"
-                  style={{ background: `linear-gradient(135deg, ${customizations.base.color} 0%, ${customizations.base.color}dd 100%)`, boxShadow: `0 10px 30px ${customizations.base.color}60, inset -10px -10px 20px rgba(0,0,0,0.3), inset 10px 10px 20px rgba(255,255,255,0.1)` }}>
-                </div>
-                {/* Sole */}
-                <div className="absolute bottom-0 left-0 w-full h-[40%] rounded-bl-[60px] rounded-br-[80px] transition-all duration-300"
-                  style={{ background: `linear-gradient(180deg, ${customizations.sole.color} 0%, ${customizations.sole.color}cc 100%)`, boxShadow: `0 8px 16px ${customizations.sole.color}40, inset 0 -4px 8px rgba(0,0,0,0.3)` }}>
-                </div>
-                {/* Laces */}
-                <div className="absolute top-[25%] left-1/2 -translate-x-1/2 flex gap-2">
-                  {[...Array(3)].map((_, i) => (
-                    <div key={i} className="w-1 h-12 rounded-full transition-all duration-300"
-                      style={{ background: `linear-gradient(90deg, ${customizations.lace.color}80 0%, ${customizations.lace.color} 50%, ${customizations.lace.color}80 100%)`, boxShadow: `2px 2px 4px rgba(0,0,0,0.5), -1px -1px 2px rgba(255,255,255,0.2)` }} />
-                  ))}
-                </div>
-                {/* Custom text */}
-                {customizations.text && (
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                    <div className="text-white font-bold text-xl tracking-wider" style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8), -1px -1px 2px rgba(255,255,255,0.3)", filter: "drop-shadow(0 0 8px rgba(255,255,255,0.5))" }}>
-                      {customizations.text}
-                    </div>
-                  </div>
-                )}
-              </div>
+            <div className="relative bg-gradient-to-br from-neutral-800 to-neutral-900 rounded-2xl p-12 min-h-[400px] flex items-center justify-center overflow-hidden">
+              
+              {/* Glow effect */}
+              <div
+                className="absolute w-96 h-96 blur-3xl opacity-30 rounded-full"
+                style={{
+                  background: `radial-gradient(circle, ${customizations.base.color}80, transparent)`,
+                }}
+              />
+
+              {/* Sneaker */}
+              <SneakerPreview
+                baseColor={customizations.base.color}
+                soleColor={customizations.sole.color}
+                laceColor={customizations.lace.color}
+                model={selectedModel}
+              />
             </div>
 
             {/* Action Buttons */}
             <div className="mt-6 flex gap-3">
-              <Button onClick={saveDesign} className="flex-1 bg-green-600 hover:bg-green-700"><Save className="w-4 h-4 mr-2" /> Save Design</Button>
-              <Button onClick={resetDesign} variant="outline" className="flex-1"><RotateCcw className="w-4 h-4 mr-2" /> Reset</Button>
+              <Button onClick={saveDesign} className="flex-1 bg-green-600 hover:bg-green-700">
+                <Save className="w-4 h-4 mr-2" /> Save Design
+              </Button>
+              <Button onClick={resetDesign} variant="outline" className="flex-1">
+                <RotateCcw className="w-4 h-4 mr-2" /> Reset
+              </Button>
             </div>
           </Card>
+
 
           {/* RIGHT: Tabs */}
           <Card className="p-6 bg-neutral-900 border-neutral-800 h-fit">

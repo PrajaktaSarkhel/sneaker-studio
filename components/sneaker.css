@@ -3,6 +3,7 @@
   width: 360px;
   height: 220px;
   transform: rotate(-12deg);
+  transition: transform 0.4s ease;
 }
 
 .sneaker-upper {
@@ -52,4 +53,32 @@
   box-shadow:
     inset -1px -1px 3px rgba(0,0,0,0.4),
     inset 1px 1px 3px rgba(255,255,255,0.25);
+}
+
+.sneaker-canvas:hover {
+  transform: rotate(-10deg) scale(1.03);
+}
+
+/* MATERIAL EFFECTS */
+
+.material-leather {
+  box-shadow:
+    inset -12px -12px 22px rgba(0,0,0,0.35),
+    inset 8px 8px 18px rgba(255,255,255,0.08),
+    0 25px 40px rgba(0,0,0,0.45);
+}
+
+.material-mesh {
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      rgba(255,255,255,0.08),
+      rgba(255,255,255,0.08) 2px,
+      transparent 2px,
+      transparent 6px
+    );
+}
+
+.material-suede {
+  filter: brightness(0.9) saturate(0.85);
 }
