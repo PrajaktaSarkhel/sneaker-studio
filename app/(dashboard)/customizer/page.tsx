@@ -8,9 +8,9 @@ import { Home, Save, RotateCcw, LogOut } from "lucide-react"
 import Link from "next/link"
 
 interface Customization {
-  upper: { color: string; material: string }
+  base: { color: string; material: string }
   sole: { color: string; material: string }
-  laces: { color: string; material: string }
+  lace: { color: string; material: string }
   text: string
 }
 
@@ -20,12 +20,12 @@ export default function CustomizerPage() {
   // ⚡ All hooks at the top – never conditional
   const [authChecked, setAuthChecked] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState("Air Max 90")
-  const [activePart, setActivePart] = useState<"upper" | "sole" | "laces">("upper")
+  const [activePart, setActivePart] = useState<"base" | "sole" | "lace">("base")
   const [activeTab, setActiveTab] = useState<"colors" | "materials" | "text">("colors")
   const [customizations, setCustomizations] = useState<Customization>({
-    upper: { color: "#FF0000", material: "leather" },
+    base: { color: "#FF0000", material: "leather" },
     sole: { color: "#FFFFFF", material: "rubber" },
-    laces: { color: "#000000", material: "cotton" },
+    lace: { color: "#000000", material: "cotton" },
     text: ""
   })
   const [textInput, setTextInput] = useState("")
@@ -34,9 +34,9 @@ export default function CustomizerPage() {
   const products = ["Air Max 90", "Jordan 1", "Yeezy Boost 350"]
   const colors = ["#FF0000","#0000FF","#000000","#FFFFFF","#00FF00","#FFFF00","#FF00FF","#FFA500","#8B4513","#808080"]
   const materials = {
-    upper: ["leather", "canvas", "suede", "mesh"],
+    base: ["leather", "canvas", "suede", "mesh"],
     sole: ["rubber", "foam", "gel"],
-    laces: ["cotton", "polyester", "waxed"]
+    lace: ["cotton", "polyester", "waxed"]
   }
 
   // 🔒 Auth check
@@ -46,6 +46,10 @@ export default function CustomizerPage() {
       router.replace("/login")
     } else {
       setAuthChecked(true)
+    }
+    const stored = localStorage.getItem("sneaker-designs")
+    if (stored) {
+      setSavedDesigns(JSON.parse(stored))
     }
   }, [router])
 
@@ -72,9 +76,9 @@ export default function CustomizerPage() {
 
   const resetDesign = () => {
     setCustomizations({
-      upper: { color: "#FF0000", material: "leather" },
+      base: { color: "#FF0000", material: "leather" },
       sole: { color: "#FFFFFF", material: "rubber" },
-      laces: { color: "#000000", material: "cotton" },
+      lace: { color: "#000000", material: "cotton" },
       text: ""
     })
     setTextInput("")
@@ -131,7 +135,7 @@ export default function CustomizerPage() {
             <div className="mt-8">
               <h3 className="text-lg font-bold mb-4">Customize Part</h3>
               <div className="space-y-2">
-                {(["upper","sole","laces"] as const).map(part => (
+                {(["base","sole","lace"] as const).map(part => (
                   <button
                     key={part}
                     onClick={() => setActivePart(part)}
@@ -151,13 +155,13 @@ export default function CustomizerPage() {
             <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">👁️ Live Preview</h2>
             <div className="relative bg-gradient-to-br from-neutral-800 to-neutral-900 rounded-2xl p-12 min-h-[400px] flex items-center justify-center overflow-hidden">
               {/* Glow effect */}
-              <div className="absolute w-96 h-96 blur-3xl opacity-30 rounded-full" style={{ background: `radial-gradient(circle, ${customizations.upper.color}80, transparent)` }} />
+              <div className="absolute w-96 h-96 blur-3xl opacity-30 rounded-full" style={{ background: `radial-gradient(circle, ${customizations.base.color}80, transparent)` }} />
 
               {/* Sneaker parts */}
               <div className="relative w-[350px] h-[250px]" style={{ transform: "rotate(-15deg)" }}>
-                {/* Upper */}
+                {/* Base */}
                 <div className="absolute top-0 left-0 w-full h-[60%] rounded-tl-[80px] rounded-tr-[60px] transition-all duration-300"
-                  style={{ background: `linear-gradient(135deg, ${customizations.upper.color} 0%, ${customizations.upper.color}dd 100%)`, boxShadow: `0 10px 30px ${customizations.upper.color}60, inset -10px -10px 20px rgba(0,0,0,0.3), inset 10px 10px 20px rgba(255,255,255,0.1)` }}>
+                  style={{ background: `linear-gradient(135deg, ${customizations.base.color} 0%, ${customizations.base.color}dd 100%)`, boxShadow: `0 10px 30px ${customizations.base.color}60, inset -10px -10px 20px rgba(0,0,0,0.3), inset 10px 10px 20px rgba(255,255,255,0.1)` }}>
                 </div>
                 {/* Sole */}
                 <div className="absolute bottom-0 left-0 w-full h-[40%] rounded-bl-[60px] rounded-br-[80px] transition-all duration-300"
@@ -167,7 +171,7 @@ export default function CustomizerPage() {
                 <div className="absolute top-[25%] left-1/2 -translate-x-1/2 flex gap-2">
                   {[...Array(3)].map((_, i) => (
                     <div key={i} className="w-1 h-12 rounded-full transition-all duration-300"
-                      style={{ background: `linear-gradient(90deg, ${customizations.laces.color}80 0%, ${customizations.laces.color} 50%, ${customizations.laces.color}80 100%)`, boxShadow: `2px 2px 4px rgba(0,0,0,0.5), -1px -1px 2px rgba(255,255,255,0.2)` }} />
+                      style={{ background: `linear-gradient(90deg, ${customizations.lace.color}80 0%, ${customizations.lace.color} 50%, ${customizations.lace.color}80 100%)`, boxShadow: `2px 2px 4px rgba(0,0,0,0.5), -1px -1px 2px rgba(255,255,255,0.2)` }} />
                   ))}
                 </div>
                 {/* Custom text */}

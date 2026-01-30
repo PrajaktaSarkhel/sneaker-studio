@@ -1,0 +1,55 @@
+.sneaker-canvas {
+  position: relative;
+  width: 360px;
+  height: 220px;
+  transform: rotate(-12deg);
+}
+
+.sneaker-upper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 65%;
+  border-radius: 90px 120px 60px 40px;
+  transition: all 0.4s ease;
+  background-blend-mode: multiply;
+  opacity: 0.95;
+  box-shadow:
+    inset -12px -12px 22px rgba(0,0,0,0.35),
+    inset 8px 8px 18px rgba(255,255,255,0.08),
+    0 25px 40px rgba(0,0,0,0.45);
+}
+
+.sneaker-sole {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 35%;
+  border-radius: 40px 60px 90px 120px;
+  transition: all 0.4s ease;
+  background-blend-mode: multiply;
+  box-shadow:
+    inset 0 -8px 14px rgba(0,0,0,0.35),
+    0 15px 25px rgba(0,0,0,0.4);
+}
+
+.sneaker-laces {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+}
+
+.sneaker-lace {
+  width: 5px;
+  height: 55px;
+  border-radius: 10px;
+  transition: all 0.4s ease;
+  box-shadow:
+    inset -1px -1px 3px rgba(0,0,0,0.4),
+    inset 1px 1px 3px rgba(255,255,255,0.25);
+}

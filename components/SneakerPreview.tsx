@@ -1,63 +1,55 @@
 "use client"
 
-import Image from "next/image"
-import { useCustomizerStore } from "@/lib/stores/customizer-store"
+import "./sneaker.css"
 
-export default function SneakerPreview() {
-  const { model, colors, material, text, textColor } =
-    useCustomizerStore()
+interface Props {
+  baseColor: string
+  soleColor: string
+  laceColor: string
+}
 
-  const basePath = `/sneakers/${model}`
-
+export default function SneakerPreview({
+  baseColor,
+  soleColor,
+  laceColor,
+}: Props) {
   return (
-    <div className="relative w-full max-w-[520px] h-[280px] mx-auto bg-muted rounded-xl overflow-hidden">
-      {/* Base */}
-      <Image
-        src={`${basePath}/base.png`}
-        alt="Base"
-        fill
-        className="object-contain"
-        style={{
-          filter: `drop-shadow(0 0 0 ${colors.base})`,
-        }}
-      />
+    <div className="flex justify-center items-center">
+      <div className="sneaker-canvas">
+        {/* Upper */}
+        <div
+          className="sneaker-upper"
+          style={{
+            background: `linear-gradient(135deg, ${baseColor}, ${baseColor}cc)`,
+          }}
+        />
 
-      {/* Sole */}
-      <Image
-        src={`${basePath}/sole.png`}
-        alt="Sole"
-        fill
-        className="object-contain"
-        style={{
-          filter: `drop-shadow(0 0 0 ${colors.sole})`,
-        }}
-      />
+        {/* Sole */}
+        <div
+          className="sneaker-sole"
+          style={{
+            background: `linear-gradient(180deg, ${soleColor}, ${soleColor}cc)`,
+          }}
+        />
 
-      {/* Lace */}
-      <Image
-        src={`${basePath}/lace.png`}
-        alt="Lace"
-        fill
-        className="object-contain"
-        style={{
-          filter: `drop-shadow(0 0 0 ${colors.lace})`,
-        }}
-      />
-
-      {/* Text Engraving */}
-      {text && (
-        <span
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 text-sm font-semibold tracking-wide"
-          style={{ color: textColor }}
-        >
-          {text}
-        </span>
-      )}
-
-      {/* Material Tag */}
-      <span className="absolute top-3 right-3 text-xs bg-black/70 text-white px-2 py-1 rounded">
-        {material}
-      </span>
+        {/* Laces */}
+        <div className="sneaker-laces">
+          {[1, 2, 3].map((i) => (
+            <div
+              key={i}
+              className="sneaker-lace"
+              style={{
+                background: `linear-gradient(
+                  90deg,
+                  ${laceColor}99,
+                  ${laceColor},
+                  ${laceColor}99
+                )`,
+              }}
+            />
+          ))}
+        </div>
+      </div>
     </div>
   )
 }
