@@ -109,7 +109,7 @@ sneaker-studio/
 
 ## 🚀 Deployment
 
-Deployed on Vercel: [\[Your Live URL\]](https://sneaker-studio-one.vercel.app/)
+Deployed on Vercel: [\[Sneaker Studio\]](https://sneaker-studio-one.vercel.app/)
 
 ## 📝 License
 
