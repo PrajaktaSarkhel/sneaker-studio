@@ -59,17 +59,24 @@ sneaker-studio/
 │   ├── (dashboard)/
 │   │   ├── customizer/
 │   │   └── gallery/
+│   │   └── my-gallery/
 │   ├── api/
 │   └── layout.tsx
+│   └── page.tsx
+│   └── providers.tsx
 ├── components/
 │   ├── ui/
-│   ├── auth/
-│   ├── customizer/
-│   └── gallery/
+│   ├── CustomizerControls.tsx
+│   ├── DesignGallery.tsx
+│   └── Navbar.tsx
+│   └── Hero.tsx
+│   └── Footer.tsx
+│   └── SneakerCard.tsx
+│   └── SneakerPreview.tsx
 ├── lib/
 │   ├── stores/
-│   ├── utils/
-│   └── hooks/
+│   ├── utils.ts
+│   └── auth.ts
 └── public/
     └── images/
 ```
@@ -91,18 +98,18 @@ sneaker-studio/
 
 ### 3. Design Gallery
 - CRUD operations
-- Search and filter
-- Grid layout
-- Infinite scroll
+- Search and filter (in progress)
+- Grid layout 
+- Infinite scroll (in progress)
 
 ### 4. AI Suggestions (Bonus)
-- Natural language processing
-- Auto-apply customizations
-- Design recommendations
+- Natural language processing (in progress)
+- Auto-apply customizations (in progress)
+- Design recommendations (in progress)
 
 ## 🚀 Deployment
 
-Deployed on Vercel: [Your Live URL]
+Deployed on Vercel: [\[Your Live URL\]](https://sneaker-studio-one.vercel.app/)
 
 ## 📝 License
 
