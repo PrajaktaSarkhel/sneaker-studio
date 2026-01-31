@@ -9,9 +9,8 @@ export default function Hero() {
     <>
       <Navbar />
 
-      <main className="min-h-screen bg-gradient-to-br from-white to-gray-100 dark:from-gray-900 dark:via-gray-950 dark:to-black text-black dark:text-white pt-24">
-
-        <div className="max-w-7xl mx-auto px-8 grid md:grid-cols-2 gap-10 items-center min-h-[calc(100vh-6rem)]">
+      <main className="pt-24">
+        <div className="max-w-7xl mx-auto px-8 grid md:grid-cols-2 gap-10 items-center py-24">
 
           {/* Text */}
           <div className="flex flex-col justify-center">
@@ -38,24 +37,52 @@ export default function Hero() {
               <Link href="/gallery">
                 <Button
                   size="lg"
-                  variant="outline"
-                  className="border-black text-black dark:border-white dark:text-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
+                  className="
+                    bg-purple-600/20 text-purple-400
+                    border border-purple-500/40
+                    hover:bg-purple-500 hover:text-white
+                    shadow-[0_0_30px_rgba(168,85,247,0.35)]
+                  "
                 >
                   View Gallery
                 </Button>
               </Link>
+
+
             </div>
           </div>
 
           {/* Sneaker Visual */}
-          <div className="relative flex items-center justify-center">
-            <div className="absolute w-72 h-72 bg-gradient-to-br from-purple-500/30 to-pink-500/30 blur-3xl rounded-full animate-glow dark:from-purple-700/30 dark:to-pink-700/30" />
+          <div className="relative flex items-center justify-center group">
+            
+            {/* Glow */}
+            <div
+              className="
+                absolute w-96 h-96 rounded-full blur-3xl
+                bg-purple-500/30
+                dark:bg-purple-600/30
+                transition-all duration-500
+                group-hover:scale-110
+              "
+            />
+
+            {/* Shoe */}
             <img
               src="/images/hero-sneaker.png"
-              className="relative w-[420px] rotate-[-12deg] drop-shadow-2xl"
               alt="Sneaker"
+              className="
+                relative
+                w-[480px]
+                rotate-[-18deg]
+                animate-float
+                drop-shadow-[0_40px_60px_rgba(0,0,0,0.45)]
+                transition-transform duration-500
+                group-hover:rotate-[-14deg]
+                group-hover:translate-y-[-6px]
+              "
             />
           </div>
+
         </div>
       </main>
     </>

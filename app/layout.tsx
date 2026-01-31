@@ -1,6 +1,5 @@
 import "./globals.css"
 import Providers from "./providers"
-import { ThemeProvider } from "next-themes"
 
 export const metadata = {
   title: "Sneaker Studio",
@@ -17,11 +16,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body>
+      <body className="bg-background text-foreground min-h-screen">
         <Providers>{children}</Providers>
-        
       </body>
     </html>
   )
 }
-

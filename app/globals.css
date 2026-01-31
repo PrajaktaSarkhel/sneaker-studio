@@ -48,3 +48,19 @@
 .animate-glow {
   animation: glow 4s ease-in-out infinite;
 }
+
+@keyframes float {
+  0% {
+    transform: translateY(0px) rotate(-18deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(-18deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(-18deg);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
