@@ -50,7 +50,7 @@ export default function GalleryPage() {
 
       <main className="flex-grow max-w-7xl mx-auto px-8 py-24">
         <h1 className="text-3xl font-bold mb-8 text-center">
-          Your Custom Designs
+          Our Collection
         </h1>
 
         <DesignGallery />

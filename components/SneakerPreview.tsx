@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import "./sneaker.css"
 
 const SHAPES = {
@@ -25,6 +26,9 @@ interface Props {
   soleColor: string
   laceColor: string
   model: "airmax" | "jordan" | "yeezy"
+  text?: string
+  textPosition?: { x: number; y: number }
+  onTextMove?: (pos: { x: number; y: number }) => void
 }
 
 export default function SneakerPreview({
@@ -32,14 +36,31 @@ export default function SneakerPreview({
   soleColor,
   laceColor,
   model,
+  text,
+  textPosition,
+  onTextMove,
 }: Props) {
-
   const shape = SHAPES[model]
+
+  const [dragging, setDragging] = useState(false)
 
   return (
     <div className="flex justify-center items-center">
-      <div className="sneaker-canvas">
-  
+      <div
+        className="sneaker-canvas"
+        onMouseMove={(e) => {
+          if (!dragging || !onTextMove) return
+
+          const rect = (e.currentTarget as HTMLDivElement).getBoundingClientRect()
+
+          onTextMove({
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top,
+          })
+        }}
+        onMouseUp={() => setDragging(false)}
+        onMouseLeave={() => setDragging(false)}
+      >
         {/* UPPER */}
         <div
           className="sneaker-upper"
@@ -69,14 +90,31 @@ export default function SneakerPreview({
               key={i}
               className="sneaker-lace"
               style={{
-                background: `linear-gradient(90deg, ${laceColor}99, ${laceColor}, ${laceColor}99)`,
+                background: `linear-gradient(
+                  90deg,
+                  ${laceColor}99,
+                  ${laceColor},
+                  ${laceColor}99
+                )`,
               }}
             />
           ))}
         </div>
 
+        {/* TEXT */}
+        {text && (
+          <div
+            className="sneaker-text"
+            style={{
+              left: textPosition?.x ?? 120,
+              top: textPosition?.y ?? 60,
+            }}
+            onMouseDown={() => setDragging(true)}
+          >
+            {text}
+          </div>
+        )}
       </div>
-
     </div>
   )
 }

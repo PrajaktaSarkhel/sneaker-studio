@@ -23,6 +23,7 @@ export default function CustomizerPage() {
   const [authChecked, setAuthChecked] = useState(false)
   const [activePart, setActivePart] = useState<"base" | "sole" | "lace">("base")
   const [activeTab, setActiveTab] = useState<"colors" | "materials" | "text">("colors")
+  const [textPosition, setTextPosition] = useState({ x: 120, y: 60 })
   const [selectedModel, setSelectedModel] = useState<"airmax" | "jordan" | "yeezy">("airmax")
   const [customizations, setCustomizations] = useState<Customization>({
     base: { color: "#FF0000", material: "leather" },
@@ -66,12 +67,14 @@ export default function CustomizerPage() {
   const saveDesign = () => {
     const newDesign = {
       id: Date.now().toString(),
+      model: selectedModel,
       customizations: { ...customizations },
-      date: new Date().toLocaleDateString()
+      date: new Date().toLocaleDateString(),
     }
+
     const saved = [...savedDesigns, newDesign]
     setSavedDesigns(saved)
-    localStorage.setItem("sneaker-designs", JSON.stringify(saved))
+    localStorage.setItem("my-sneaker-designs", JSON.stringify(saved))
     alert("Design saved successfully! 🎉")
   }
 
@@ -102,15 +105,47 @@ export default function CustomizerPage() {
             <h1 className="text-2xl font-bold">Sneaker Customizer</h1>
           </div>
           <div className="flex items-center gap-4">
-            <Link href="/gallery">
-              <Button variant="outline">My Gallery</Button>
+            <Link href="/my-gallery">
+              <Button variant="outline">
+                My Gallery
+              </Button>
             </Link>
+
             <Button variant="ghost" size="icon" onClick={handleLogout}>
               <LogOut className="w-5 h-5" />
             </Button>
           </div>
         </div>
       </header>
+
+      {/* DESIGN TOOLBAR */}
+      <div className="sticky top-[64px] z-40 bg-neutral-900 border-b border-neutral-800">
+        <div className="max-w-[1800px] mx-auto px-6 py-3 flex gap-4 items-center">
+          
+          {[
+            "Brush",
+            "Pen",
+            "Text",
+            "Shape",
+            "Eraser",
+            "Magic",
+            "Hand",
+            "Zoom",
+          ].map((tool) => (
+            <button
+              key={tool}
+              className="px-4 py-2 rounded-md text-sm font-medium bg-neutral-800 text-neutral-300 hover:bg-neutral-700 hover:text-white transition"
+            >
+              {tool}
+            </button>
+          ))}
+
+          <div className="ml-auto text-sm text-neutral-400">
+            Design Mode (UI only)
+          </div>
+        </div>
+      </div>
+
 
       {/* Main */}
       <main className="max-w-[1800px] mx-auto p-8">
@@ -180,6 +215,9 @@ export default function CustomizerPage() {
                 soleColor={customizations.sole.color}
                 laceColor={customizations.lace.color}
                 model={selectedModel}
+                text={customizations.text}
+                textPosition={textPosition}
+                onTextMove={setTextPosition}
               />
             </div>
 
